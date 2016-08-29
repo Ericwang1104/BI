@@ -1,4 +1,4 @@
-unit Spss.SpssIO;
+unit BI.Data.SpssIO;
 
 interface
 uses Windows, Dialogs;
@@ -237,76 +237,76 @@ type
   {Estrutura para leitura e escrita de multi resposta}
   PspssMultRespDef = ^TspssMultRespDef;
   TspssMultRespDef = record
-    {Nome p/ multi resposta terminado em null, tamanho m·ximo de 64 inicia "$" }
+    {Nome p/ multi resposta terminado em null, tamanho m√°ximo de 64 inicia "$" }
     szMrSetName        : array[0..SPSS_MAX_VARNAME] of Char;
 
     {Label(Pergunta) para multi resposta terminado em null, tamanho de 256     }
     szMrSetLabel       : array[0..SPSS_MAX_VARLABEL] of Char;
 
-    {1 se multi resposta dictioma e 0 se n„o                                   }
+    {1 se multi resposta dictioma e 0 se n√£o                                   }
     qIsDichotomy       : integer;
 
-    {1 se contÈm valor numerico e 0 se n„o                                     }
+    {1 se cont√©m valor numerico e 0 se n√£o                                     }
     qIsNumeric         : integer;
 
-    {1 se v·rias categorias para as quais o dicotomias est„o a ser marcados com}
-    {o valor correspondente rÛtulos ao valor contabilizado.                    }
+    {1 se v√°rias categorias para as quais o dicotomias est√£o a ser marcados com}
+    {o valor correspondente r√≥tulos ao valor contabilizado.                    }
     qUseCategoryLabels : integer;
 
-    {1 se para m˙ltiplas dicotomias para a qual o rÛtulo para o conjunto ?    }
-    {retirado do rÛtulo da vari·vel primeiro componente vari·vel               }
+    {1 se para m√∫ltiplas dicotomias para a qual o r√≥tulo para o conjunto ?    }
+    {retirado do r√≥tulo da vari√°vel primeiro componente vari√°vel               }
     qUseFirstVarLabel  : integer;
 
-    {Reservado para expans„o}
+    {Reservado para expans√£o}
     Reserved           : array[0..13] of integer;
 
-    {O valor contabilizado para numÈrico m˙ltiplos dicotomias                  }
+    {O valor contabilizado para num√©rico m√∫ltiplos dicotomias                  }
     nCountedValue      : longint;
 
-    {Ponteiro o valor contabilizado para string de m˙ltiplos dicotomias        }
+    {Ponteiro o valor contabilizado para string de m√∫ltiplos dicotomias        }
     pszCountedValue    : PAnsiChar;
 
     {Ponteiro para o array de nomes}
     ppszVarNames       : PTValuec;
 
-    {Numero de vari·veis da estrutura}
+    {Numero de vari√°veis da estrutura}
     nVariables          : integer;
   end;
 
-  {ManipulaÁ„o de arquivos}
+  {Manipula√ß√£o de arquivos}
 
-  {Esta funÁ„o abre o aruqivo para leitura, retornando handle para operaÁıes no}
+  {Esta fun√ß√£o abre o aruqivo para leitura, retornando handle para opera√ß√µes no}
   {arquivo                                                                     }
   {filename     - Caminho e nome do arquivo que ser?aberto p/ leitura         }
   {handle       - Handle do arquivo.                                           }
   TspssOpenRead              = function(const fileName : PAnsiChar; var handle : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o abre o arquivo abrindo os cases e retornando o handle para      }
-  {operaÁıes no arquivo                                                        }
+  {Esta fun√ß√£o abre o arquivo abrindo os cases e retornando o handle para      }
+  {opera√ß√µes no arquivo                                                        }
   TspssOpenAppend            = function(const fileName : PAnsiChar; var handle : Integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o abre um novo arquivo para escrita                               }
+  {Esta fun√ß√£o abre um novo arquivo para escrita                               }
   TspssOpenWrite             = function(const fileName : PAnsiChar; var handle : Integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
 
-  {Esta funÁ„o fecha arquivo aberto pela spssOpenRead  somente por esta funÁ„o }
+  {Esta fun√ß√£o fecha arquivo aberto pela spssOpenRead  somente por esta fun√ß√£o }
   {handle       - Handle do arquivo.                                           }
   TspssCloseRead             = function(const handle : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
   {28/04/2008}
 
-  {Esta funÁ„o fecha arquivo aberto pela spssOpenAppend somente por esta funÁ„o}
+  {Esta fun√ß√£o fecha arquivo aberto pela spssOpenAppend somente por esta fun√ß√£o}
   {handle       - Handle do arquivo.                                           }
   TspssCloseAppend           = function(const handle : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o fecha arquivo aberto pela spssOpenWrite somente por esta funÁ„o }
+  {Esta fun√ß√£o fecha arquivo aberto pela spssOpenWrite somente por esta fun√ß√£o }
   {handle       - Handle do arquivo.                                           }
   TspssCloseWrite            = function(const handle : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o copia os dados do arquivo de origem para o de destino           }
+  {Esta fun√ß√£o copia os dados do arquivo de origem para o de destino           }
   {O arquivo de destino tem que ser aberto como Output. Se o arquivo de destino}
-  {j?estiver aberto a copia ser?descartada. Se o arquivo de origem n„o tiver }
-  {informaÁıes o destino tambÈm ficar?vazio                                   }
+  {j?estiver aberto a copia ser?descartada. Se o arquivo de origem n√£o tiver }
+  {informa√ß√µes o destino tamb√©m ficar?vazio                                   }
   {fromHandle     - Handle do arquivo de origem                                }
   {toHandle       - Handle do arquivo de destino                               }
   TspssCopyDocuments         = function(const fromHandle : integer; Const toHandle : Integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
@@ -318,52 +318,52 @@ type
 
   TspssGetVarNames           = function(const handle : integer; var numVars : integer; var varNames : PTValuec; var varTypes : PTValuei) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o retorna o valor do label apartir do nome curto da vari·vel}
+  {Esta fun√ß√£o retorna o valor do label apartir do nome curto da vari√°vel}
   TspssGetVarCValueLabels    = function(const handle : integer; const varName : PAnsiChar; var values : PTValuec; var labels : PTValuec; var numLabels : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
   {Escrita no arquivo}
   {28/04/2008}
 
-  {Esta funÁ„o grava um case no o arquivo de dados especificado                }
-  {Ela deve ser chamada apÛs ter sido setado os valores das vari·veis, atravÈs }
+  {Esta fun√ß√£o grava um case no o arquivo de dados especificado                }
+  {Ela deve ser chamada ap√≥s ter sido setado os valores das vari√°veis, atrav√©s }
   {spssSetValueNumeric e spssSetValueChar.                                     }
   {handle       - Handle do arquivo.                                           }
   TspssCommitCaseRecord      = function(const handle : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o grava o dicion·rio de dados no arquivo associado                }
-  {Antes da escrita do case o dicion·rio de dados deve esta comitado           }
+  {Esta fun√ß√£o grava o dicion√°rio de dados no arquivo associado                }
+  {Antes da escrita do case o dicion√°rio de dados deve esta comitado           }
   {handle       - Handle do arquivo.                                           }
   TspssCommitHeader          = function(const handle : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {ManipulaÁ„o de data e hora}
+  {Manipula√ß√£o de data e hora}
   {28/04/2008}
 
-  {Esta funÁ„o converte data para o formato gregoriano                         }
-  {day        - Dias do mÍs                                                    }
+  {Esta fun√ß√£o converte data para o formato gregoriano                         }
+  {day        - Dias do m√™s                                                    }
   {month      - meses do ano                                                   }
   {year       - ano a partir de 1582                                           }
   {spssdate   - Data no formato gregoriano                                     }
   TspssConvertDate           = function(day, month, year : integer; Var spssDate : Double) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o converte a data a partir de um valor interno para gregoriano    }
-  {day        - Dias do mÍs                                                    }
+  {Esta fun√ß√£o converte a data a partir de um valor interno para gregoriano    }
+  {day        - Dias do m√™s                                                    }
   {month      - meses do ano                                                   }
   {year       - ano a partir de 1582                                           }
   {spssdate   - Data no formato gregoriano                                     }
   TspssConvertSPSSDate       = function(var day, month, year : integer; spssDate : Double) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o quebra um valor no formato interno SPSS(data) em n˙mero de dias }
+  {Esta fun√ß√£o quebra um valor no formato interno SPSS(data) em n√∫mero de dias }
   {acrescido da hora, minuto, segundo e valores. Note que o segundo valor ?   }
-  {armazenado em um double, uma vez que pode ter uma parte fracion·ria.        }
-  {day        - Dias do mÍs                                                    }
+  {armazenado em um double, uma vez que pode ter uma parte fracion√°ria.        }
+  {day        - Dias do m√™s                                                    }
   {hour       - horas do dia                                                   }
   {minute     - Minutos da hora                                                }
   {second     - Segundos do minuto                                             }
   {spsstime   - Data no formato interno SPSS                                   }
   TspssConvertSPSSTime       = function(var day : Longint; var hour, minute : integer; var second : Double; spssTime : double) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o converte o dia, a hora, minuto e segundos para o padr„o SPSS    }
-  {day        - Dias do mÍs                                                    }
+  {Esta fun√ß√£o converte o dia, a hora, minuto e segundos para o padr√£o SPSS    }
+  {day        - Dias do m√™s                                                    }
   {hour       - horas do dia                                                   }
   {minute     - Minutos da hora                                                }
   {second     - Segundos do minuto                                             }
@@ -373,269 +373,269 @@ type
   {Adiciona resposta a pesquisa}
   {28/04/2008}
 
-  {Esta funÁ„o adiciona um simples atributo ao arquivo                         }
-  {Se atributo j?existir ele ser?sobre escrito, para ele n„o sobre escrevido }
+  {Esta fun√ß√£o adiciona um simples atributo ao arquivo                         }
+  {Se atributo j?existir ele ser?sobre escrito, para ele n√£o sobre escrevido }
   {deve ser passado -1 no atribsub                                             }
   {handle       - Handle do arquivo.                                           }
-  {varName      - Nome da vari·vel                                             }
+  {varName      - Nome da vari√°vel                                             }
   {attribName   - Nome do atributo                                             }
   {attribSub    - Origem do atributo ou -1                                     }
   {attribText   - 	Texto usado como o valor do atributo                        }
   TspssAddFileAttribute      = function(const handle : integer; const attribName : PAnsiChar; const attribSub  : integer; const attribText : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o adiciona uma multi resposta tipo string ao dicion·rio do arquivo}
+  {Esta fun√ß√£o adiciona uma multi resposta tipo string ao dicion√°rio do arquivo}
   {handle       - Handle do arquivo.                                           }
-  {mrSetName    - Nome da multipla resposta com tamanho m·ximo de 64 bytes long}
-  {               que comeÁe com o sinalizador "$" e tenha um nome v·lido      }
-  {mrSetLabel   - Label(Pergunta) para a multi resposta com o tamanho m·ximo de}
-  {               256 bytes long. Pode ser vazio ou null para indicar que n„o È}
+  {mrSetName    - Nome da multipla resposta com tamanho m√°ximo de 64 bytes long}
+  {               que come√ße com o sinalizador "$" e tenha um nome v√°lido      }
+  {mrSetLabel   - Label(Pergunta) para a multi resposta com o tamanho m√°ximo de}
+  {               256 bytes long. Pode ser vazio ou null para indicar que n√£o √©}
   {               o label desejado                                             }
-  {isDichotomy  - Se n„o null ser„o codificadas no dichotomies e zero de outra }
+  {isDichotomy  - Se n√£o null ser√£o codificadas no dichotomies e zero de outra }
   {               forma                                                        }
   {countedValue - String terminada em null contendo valor contabilizado.       }
   {               Utilizado quando isDichotomy ?diferente de zero e caso deve }
-  {               ser 1? characters long e ignorados caso contr·rio. Pode ser }
+  {               ser 1? characters long e ignorados caso contr√°rio. Pode ser }
   {               nul se isDichotomy igual a zero                              }
-  {varNames     - Array terminado em null contendo o nome das vari·veis        }
-  {               Todas as vari·veis devem ter o nome curto(acho que tamanho   }
-  {               m·ximo tem que ser 8).                                       }
-  {numVars      - Numero de vari·veis da lista (varNames).                     }
+  {varNames     - Array terminado em null contendo o nome das vari√°veis        }
+  {               Todas as vari√°veis devem ter o nome curto(acho que tamanho   }
+  {               m√°ximo tem que ser 8).                                       }
+  {numVars      - Numero de vari√°veis da lista (varNames).                     }
   TspssAddMultRespDefC       = function(const handle : integer; const mrSetName : PAnsiChar; const mrSetLabel : PAnsiChar; isDichotomy : integer; const countedValue : PAnsiChar; const varNames : PTValuec; numVars : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o adiciona uma multi resposta a partir da estrututa no dicionario }
-  {Ao adicionar na estrutura, definir o nome ˙nico e as vari·veis devem existir}
-  {e ser do tipo adequado - numÈrica ou string dependendo do qIsNumeric.       }
+  {Esta fun√ß√£o adiciona uma multi resposta a partir da estrututa no dicionario }
+  {Ao adicionar na estrutura, definir o nome √∫nico e as vari√°veis devem existir}
+  {e ser do tipo adequado - num√©rica ou string dependendo do qIsNumeric.       }
   {handle       - Handle do arquivo.                                           }
   {pSet         - Ponteiro para estrutura                                      }
   TspssAddMultRespDefExt     = function(const handle : integer; const spssMultRespDef : PspssMultRespDef)  : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o adiciona uma multi resposta tipo numerica ao dicion·rio         }
+  {Esta fun√ß√£o adiciona uma multi resposta tipo numerica ao dicion√°rio         }
   {handle       - Handle do arquivo.                                           }
-  {mrSetName    - Nome da multipla resposta com tamanho m·ximo de 64 bytes long}
-  {               que comeÁe com o sinalizador "$" e tenha um nome v·lido      }
-  {mrSetLabel   - Label(Pergunta) para a multi resposta com o tamanho m·ximo de}
-  {               256 bytes long. Pode ser vazio ou null para indicar que n„o È}
+  {mrSetName    - Nome da multipla resposta com tamanho m√°ximo de 64 bytes long}
+  {               que come√ße com o sinalizador "$" e tenha um nome v√°lido      }
+  {mrSetLabel   - Label(Pergunta) para a multi resposta com o tamanho m√°ximo de}
+  {               256 bytes long. Pode ser vazio ou null para indicar que n√£o √©}
   {               o label desejado                                             }
-  {isDichotomy  - Se n„o null ser„o codificadas no dichotomies e zero de outra }
+  {isDichotomy  - Se n√£o null ser√£o codificadas no dichotomies e zero de outra }
   {               forma                                                        }
   {countedValue - String terminada em null contendo valor contabilizado.       }
   {               Utilizado quando isDichotomy ?diferente de zero e caso deve }
-  {               ser 1? characters long e ignorados caso contr·rio. Pode ser }
+  {               ser 1? characters long e ignorados caso contr√°rio. Pode ser }
   {               nul se isDichotomy igual a zero                              }
-  {varNames     - Array terminado em null contendo o nome das vari·veis        }
-  {               Todas as vari·veis devem ter o nome curto(acho que tamanho   }
-  {               m·ximo tem que ser 8).                                       }
-  {numVars      - Numero de vari·veis da lista (varNames).                     }
+  {varNames     - Array terminado em null contendo o nome das vari√°veis        }
+  {               Todas as vari√°veis devem ter o nome curto(acho que tamanho   }
+  {               m√°ximo tem que ser 8).                                       }
+  {numVars      - Numero de vari√°veis da lista (varNames).                     }
   TspssAddMultRespDefN       = function(const handle : integer; const mrSetName  : PAnsiChar; const mrSetLabel : PAnsiChar; isDichotomy : integer; countedValue : Longint; const varNames : PTValuec; numVars : Integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o ?similar a sspsaddfileatribute, mas que opera em uma ˙nica     }
-  {vari·vel da esrutura de atributos.                                          }
+  {Esta fun√ß√£o ?similar a sspsaddfileatribute, mas que opera em uma √∫nica     }
+  {vari√°vel da esrutura de atributos.                                          }
   {handle       - Handle do arquivo.                                           }
-  {varName      - Nome da vari·vel                                             }
+  {varName      - Nome da vari√°vel                                             }
   {attribName   - Nome do atributo                                             }
   {attribSub    - Origem do atributo ou -1                                     }
   {attribText   - 	Texto usado como o valor do atributo                        }
   TspssAddVarAttribute       = function(const handle : integer; const varName    : PAnsiChar; const attribName : PAnsiChar; const attribSub : integer; const attribText : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {DesalocaÁ„o de mÈmoria}
+  {Desaloca√ß√£o de m√©moria}
   {28/04/2008}
 
-  {Esta funÁ„o desaloca a memÛria alocada dinamicamente pelas funÁıes          }
+  {Esta fun√ß√£o desaloca a mem√≥ria alocada dinamicamente pelas fun√ß√µes          }
   {spssGetFileAttributes. ou spssGetVarAttributes.                              }
   {attribNames  - Ponteiro para o array nomes de atributos                     }
   {attribText   - Ponteiro para array valores de texto                         }
   {nAttributes  - Numero de elementos do array                                 }
   TspssFreeAttributes        = function(attribNames, attribText : PTValuec; const nAttributes : Integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o ?chamada p/ liberar a memoria alocada pela funÁ„o              }
+  {Esta fun√ß√£o ?chamada p/ liberar a memoria alocada pela fun√ß√£o              }
   {spssGetDateVariables.                                                       }
   {dateInfo     - Array de dados TRENDS                                        }
   TspssFreeDateVariables     = function(Var dateInfo : PTValuelong) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o libera a memoria alocada pela funÁ„o spssGetMultRespDefs        }
+  {Esta fun√ß√£o libera a memoria alocada pela fun√ß√£o spssGetMultRespDefs        }
   TspssFreeMultRespDefs      = function(mrespDefs : PAnsiChar)  : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o libera a memoria alocada pela funÁ„o spssGetMultRespDefByIndex  }
+  {Esta fun√ß√£o libera a memoria alocada pela fun√ß√£o spssGetMultRespDefByIndex  }
   TspssFreeMultRespDefStruct = function(pSet : PspssMultRespDef) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o libera da memoria dois arrays PTValuec e numero de labels,      }
-  {alocados pela funÁ„o spssGetVarCValueLabels                                 }
+  {Esta fun√ß√£o libera da memoria dois arrays PTValuec e numero de labels,      }
+  {alocados pela fun√ß√£o spssGetVarCValueLabels                                 }
   TspssFreeVarCValueLabels   = function(values : PTValuec; labels : PTValuec; numLabels : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o libera a memoria alocada pela funÁ„o spssGetVariableSets        }
+  {Esta fun√ß√£o libera a memoria alocada pela fun√ß√£o spssGetVariableSets        }
   TspssFreeVariableSets      = function(varSets : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o libera da memoria os arrays PTValued e PTValuec e o numero de   }
-  {labels alocados pela funÁ„o spssGetVarNValueLabels                          }
+  {Esta fun√ß√£o libera da memoria os arrays PTValued e PTValuec e o numero de   }
+  {labels alocados pela fun√ß√£o spssGetVarNValueLabels                          }
   TspssFreeVarNValueLabels   = function(values : PTValued; labels : PTValuec; numLabels : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o libera da memoria os arrays PTValuec e PTValuei e o numero de   }
-  {variaveis alocados pela funÁ„o spssGetVarNames                              }
+  {Esta fun√ß√£o libera da memoria os arrays PTValuec e PTValuei e o numero de   }
+  {variaveis alocados pela fun√ß√£o spssGetVarNames                              }
   TspssFreeVarNames          = function(varNames : PTValuec; varTypes : PTValuei; numVars : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
 
-  {Pega informaÁıes sobre o arquivo}
+  {Pega informa√ß√µes sobre o arquivo}
   {25/04/2008}
 
-  {Esta funÁ„o retorna o tamanho(size) do case associado ao arquivo            }
+  {Esta fun√ß√£o retorna o tamanho(size) do case associado ao arquivo            }
   {O tamanho(size) do case retornado ser?utilizado em baixo nivel input/output}
   {pelas output procedures spssWholeCaseIn e spssWholeCaseOut                  }
   TspssGetCaseSize           = function(const handle : integer; Var caseSize : Longint) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {***** N„o entendi como funciona *****                                       }
+  {***** N√£o entendi como funciona *****                                       }
   TspssGetCaseWeightVar      = function(const handle : integer; const varName : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o 1 se arquivo compactado e 0 caso nao seja compactado            }
+  {Esta fun√ß√£o 1 se arquivo compactado e 0 caso nao seja compactado            }
   TspssGetCompression        = function(const handle : integer; var compSwitch : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o reporta informaÁıes sobre data TRENDS no arquivo                }
-  {Ela aloca em tempo de execucao o array dateInfo com o tamanho numVars, apÛs }
-  {utilizaÁ„o do array ?necess·rio sua liberaÁ„o da memoria feita pela funÁ„o }
+  {Esta fun√ß√£o reporta informa√ß√µes sobre data TRENDS no arquivo                }
+  {Ela aloca em tempo de execucao o array dateInfo com o tamanho numVars, ap√≥s }
+  {utiliza√ß√£o do array ?necess√°rio sua libera√ß√£o da memoria feita pela fun√ß√£o }
   {spssFreeDateVariables                                                       }
   TspssGetDateVariables      = function(const handle : integer; var numVars : integer; var dateInfo : PTValuelong) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {FunÁ„o n„o necessariamente importarte apartir da vers„o 6 do SPSS           }
-  {Se o arquivo n„o tiver respostas a funÁ„o ir?rentornar -1 em casecount, mas}
+  {Fun√ß√£o n√£o necessariamente importarte apartir da vers√£o 6 do SPSS           }
+  {Se o arquivo n√£o tiver respostas a fun√ß√£o ir?rentornar -1 em casecount, mas}
   {se existir resposta ele ir?retornar prescisamente o numero de cases se     }
   {arquivo descompactado e se estiver compactado ir?retornar uma estimativa   }
-  {N„o pode ser usada se arquivo aberto spssOpenAppend                         }
+  {N√£o pode ser usada se arquivo aberto spssOpenAppend                         }
   TspssGetEstimatedNofCases  = function(const handle : integer; Var caseCount : Longint) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o retorna todos os atributos do arquivo                           }
-  {FunÁ„o aloca a memoria necess·rio para retornar os nome e seu valores       }
+  {Esta fun√ß√£o retorna todos os atributos do arquivo                           }
+  {Fun√ß√£o aloca a memoria necess√°rio para retornar os nome e seu valores       }
   TspssGetFileAttributes     = function(const handle : integer; var attribNames : PTValuec; var attribText : PTValuec; var nAttributes : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o provem numero da pagina(Handle) do windows relacionado a arquivo}
+  {Esta fun√ß√£o provem numero da pagina(Handle) do windows relacionado a arquivo}
   TspssGetFileEncoding = function(const handle: integer; var pszEncoding: PAnsiChar):
       integer;
 
-  {Esta funÁ„o copia o label do arquivo para o buffer(PAnsiChar) id.               }
+  {Esta fun√ß√£o copia o label do arquivo para o buffer(PAnsiChar) id.               }
   {O tamanho do label ?de 64 e terminado em null                              }
   {Assim, o tamanho do buffer deve ser de pelo menos 65                        }
   TspssGetIdString           = function(const handle : integer; var id : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o retorna a codificaÁ„o da pagina}
+  {Esta fun√ß√£o retorna a codifica√ß√£o da pagina}
   TspssGetInterfaceEncoding  = function() : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o retorna o numero de multi resposta do dicionario                }
+  {Esta fun√ß√£o retorna o numero de multi resposta do dicionario                }
   TspssGetMultRespCount      = function(const handle : integer; var nSets : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o obtem os dados de uma multi resposta sentando ela na estrutura  }
-  {ApÛs utilizaÁ„o da funÁ„o mem. deve ser libera c/ spssFreeMultRespDefStruct }
+  {Esta fun√ß√£o obtem os dados de uma multi resposta sentando ela na estrutura  }
+  {Ap√≥s utiliza√ß√£o da fun√ß√£o mem. deve ser libera c/ spssFreeMultRespDefStruct }
   TspssGetMultRespDefByIndex = function(const handle : integer; const iSet : integer; var ppSet : PspssMultRespDef) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o recupera as definiÁıes a partir de arquivo  de dados SPSS       }
-  {A memoria alocada por este funÁ„o deve ser liberada por spssFreeMultRespDefs}
+  {Esta fun√ß√£o recupera as defini√ß√µes a partir de arquivo  de dados SPSS       }
+  {A memoria alocada por este fun√ß√£o deve ser liberada por spssFreeMultRespDefs}
   TspssGetMultRespDefs       = function(const handle : integer; Var mrespDefs : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o reporta o numero de case existentes no arquivo                  }
+  {Esta fun√ß√£o reporta o numero de case existentes no arquivo                  }
   TspssGetNumberofCases      = function(const handle : integer; var numofCases : Longint) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o reporta o numero de variables existentes no arquivo             }
+  {Esta fun√ß√£o reporta o numero de variables existentes no arquivo             }
   TspssGetNumberofVariables  = function(const handle : integer; Var numVars : Longint) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o reporta informaÁıes sobre o arquivo                             }
-  {A informaÁ„o ?constituÌdo por um conjunto de oito int valores copiados     }
-  {de registro tipo 7,  subtipo 3, e ?˙til principalmente para depuraÁ„o      }
+  {Esta fun√ß√£o reporta informa√ß√µes sobre o arquivo                             }
+  {A informa√ß√£o ?constitu√≠do por um conjunto de oito int valores copiados     }
+  {de registro tipo 7,  subtipo 3, e ?√∫til principalmente para depura√ß√£o      }
   {A ordem do array ?a seguinte:                                              }
   {0 - Numero inicial                                                          }
   {1 - Sub numero inicial                                                      }
   {2 - Numero especial                                                         }
   {3 - Codigo da maquina                                                       }
-  {4 - RepresentaÁ„o de ponto flutuante(casas decimais)                        }
-  {5 - Codigo da compress„o                                                    }
+  {4 - Representa√ß√£o de ponto flutuante(casas decimais)                        }
+  {5 - Codigo da compress√£o                                                    }
   {6 - Codigo big / little-endian                                              }
-  {7 - Codigo para representaÁ„o de string                                     }
+  {7 - Codigo para representa√ß√£o de string                                     }
   TspssGetReleaseInfo        = function(const handle : integer; var relinfo : PTValuei) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o retorna o nome do sistema em que o arquivo foi criado           }
+  {Esta fun√ß√£o retorna o nome do sistema em que o arquivo foi criado           }
   TspssGetSystemString       = function(const handle : integer; var sysName : array of char) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o coloca os dados do texto criado por TextSmart}
+  {Esta fun√ß√£o coloca os dados do texto criado por TextSmart}
   TspssGetTextInfo           = function(const handle : integer; var textInfo : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o retorna a data de criaÁ„o do arquivo}
+  {Esta fun√ß√£o retorna a data de cria√ß√£o do arquivo}
   TspssGetTimeStamp          = function(const handle : integer; var fileDate : PAnsiChar; Var fileTime : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Pegas as informaÁıes do case}
+  {Pegas as informa√ß√µes do case}
 
-  {Esta funÁ„o pega uma valor do timpo string do case corrente}
+  {Esta fun√ß√£o pega uma valor do timpo string do case corrente}
   TspssGetValueChar          = function(const handle : integer; varHandle : Double; value : PAnsiChar; valueSize : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o retorna o handle da variavel, que pode ser usado tanto para     }
+  {Esta fun√ß√£o retorna o handle da variavel, que pode ser usado tanto para     }
   {leitura quanto para escrita do valor da variavel                            }
   TspssGetVarHandle          = function(const handle : integer; const varName : PAnsiChar; var varHandle : Double) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o l?o proximo case do arquivo}
+  {Esta fun√ß√£o l?o proximo case do arquivo}
   TspssReadCaseRecord        = function(const handle : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o pega uma valor do timpo numeric do case corrente}
+  {Esta fun√ß√£o pega uma valor do timpo numeric do case corrente}
   TspssGetValueNumeric       = function(const handle : integer; varHandle : Double ; var value : Double) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o faz a mesma coisa da spssGetFileAttributes. Retorna os atributos de uma variavel}
+  {Esta fun√ß√£o faz a mesma coisa da spssGetFileAttributes. Retorna os atributos de uma variavel}
   TspssGetVarAttributes      = function(const handle : integer; const varName : PAnsiChar; var attribNames : PTValuec; var attribText : PTValuec; var nAttributes : integer)  : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o reporta o valor do atributo de alinhamento da vari·vel}
+  {Esta fun√ß√£o reporta o valor do atributo de alinhamento da vari√°vel}
   TspssGetVarAlignment       = function(const handle : integer; const varName : PAnsiChar; var alignment : Integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o indica se a variavel tipo string possui valor}
+  {Esta fun√ß√£o indica se a variavel tipo string possui valor}
   TspssGetVarCMissingValues  = function(const handle : integer; const varName : PAnsiChar; var missingFormat : integer; var missingVal1 : PAnsiChar; Var missingVal2 : PAnsiChar; Var missingVal3 : PAnsiChar)  : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o reporta o tamanho(width) de uma vari·vel}
+  {Esta fun√ß√£o reporta o tamanho(width) de uma vari√°vel}
   TspssGetVarColumnWidth     = function(const handle : integer; const varName : PAnsiChar; var columnWidth :  Integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o reporta o nome curto da vari·vel}
+  {Esta fun√ß√£o reporta o nome curto da vari√°vel}
   TspssGetVarCompatName      = function(const handle : integer; const longName : PAnsiChar; var shortName : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o permite ao usu·rio controlar o numero de caracteres ele deseja  }
+  {Esta fun√ß√£o permite ao usu√°rio controlar o numero de caracteres ele deseja  }
   {ler, caso o valor da variavel seja maior que quantidade de caracteres que o }
   {usuario deseja ler ?retornado um erro                                      }
   TspssGetVarCValueLabelLong = function(const handle : integer; const varName : PAnsiChar; const value : PAnsiChar; var labelBuff : PAnsiChar; lenBuff : Integer; var lenLabel : Integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o reporta as informaÁıes da variaveis do arquivo de dados         }
+  {Esta fun√ß√£o reporta as informa√ß√µes da variaveis do arquivo de dados         }
   TspssGetVariableSets       = function(const handle : integer; varNames : PTValuec) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o pega nome e o tipo de uma variavel presente no arquivo          }
+  {Esta fun√ß√£o pega nome e o tipo de uma variavel presente no arquivo          }
   TspssGetVarInfo            = function(const handle : integer; const iVar : Integer; var varName : PAnsiChar; var varType : Integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o copia o label da vari·vel passada para funÁ„o para ponteiro     }
+  {Esta fun√ß√£o copia o label da vari√°vel passada para fun√ß√£o para ponteiro     }
   TspssGetVarLabel           = function(const handle : integer; const varName : PAnsiChar; varLabel : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o retorna o label associado a vari·vel trazendo apenas o numero de}
+  {Esta fun√ß√£o retorna o label associado a vari√°vel trazendo apenas o numero de}
   {bytes informado                                                             }
   TspssGetVarLabelLong       = function(const handle : integer; const varName : PAnsiChar;  labelBuff : PAnsiChar; lenBuff : integer; var lenLabel : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o retorna o valor medio do level atribuido a variavel             }
+  {Esta fun√ß√£o retorna o valor medio do level atribuido a variavel             }
   TspssGetVarMeasureLevel    = function(const handle : integer; const varName : PAnsiChar; var measureLevel : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o ?uma combinaÁ„o para busca de valores de variaveis             }
+  {Esta fun√ß√£o ?uma combina√ß√£o para busca de valores de variaveis             }
   TspssGetVarNMissingValues  = function(const handle : integer; const varName : PAnsiChar; var missingFormat : Integer; var missingVal1 : Double; var missingVal2 : Double; var missingVal3 : Double) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o retorna valor de uma label que corresponde a um valor especifico}
+  {Esta fun√ß√£o retorna valor de uma label que corresponde a um valor especifico}
   {de uma variavel numerica. Esta permite ao usuario limitar o quantidade de   }
   {byte que deve ser retornado                                                 }
   TspssGetVarNValueLabelLong = function(const handle : integer; const varName : PAnsiChar; value : double; var labelBuff : PAnsiChar; lenBuff : integer; var lenLabel : Integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o retorna formataÁ„o(PrintType, Decimal e tamanho) de uma variavel}
+  {Esta fun√ß√£o retorna formata√ß√£o(PrintType, Decimal e tamanho) de uma variavel}
   TspssGetVarPrintFormat     = function(const handle : integer; const varName : PAnsiChar; var printType : integer; var printDec : Integer; var printWid : Integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o escreve a formataÁ„o de uma variavel no arquivo                 }
+  {Esta fun√ß√£o escreve a formata√ß√£o de uma variavel no arquivo                 }
   TspssGetVarWriteFormat     = function(const handle : integer; const varName : PAnsiChar; var writeType : Integer; var writeDec : Integer; var writeWid : Integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o determina a se a codificaÁ„o do arquivo ?compativel            }
+  {Esta fun√ß√£o determina a se a codifica√ß√£o do arquivo ?compativel            }
   TspssIsCompatibleEncoding  = function (const handle : integer; var bCompatible : Integer):integer ; {$IFDEF WIN32} stdcall; {$ENDIF}
 
   {Esta procspssIsCompatibleEncodingedure retorna o menor e o maior valor para uma faixa de valores    }
-  {n„o encontrados                                                             }
+  {n√£o encontrados                                                             }
   TspssLowHighVal            = procedure (var lowest : Double; var highest : Double); {$IFDEF WIN32} stdcall; {$ENDIF}
 
   {Retorna o subtipo do arquivo}
   TspssQueryType7            = function(const handle : integer; const subType : integer; var bFound : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Seta o tipo de compress„o}
+  {Seta o tipo de compress√£o}
   TspssSetCompression        = function(const handle : integer; compSwitch : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Seta as vari·veis TREND}
+  {Seta as vari√°veis TREND}
   TspssSetDateVariables      = function(const handle : integer; numofElements : integer; const dateInfo : Longint) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
 
@@ -644,83 +644,83 @@ type
   {Reescreve os atributos do arquivo}
   TspssSetFileAttributes     = function(const handle : integer; const attribNames : TValuec; const attribText : TValuec; const nAttributes : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o seta o label do arquivo de dados SPSS associado ao handle do id informado}
+  {Esta fun√ß√£o seta o label do arquivo de dados SPSS associado ao handle do id informado}
   TspssSetIdString           = function(const handle : integer; const id : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o muda o codigo da interface, se executada com sucesso codigo do arquivo ?alterado}
+  {Esta fun√ß√£o muda o codigo da interface, se executada com sucesso codigo do arquivo ?alterado}
   TspssSetInterfaceEncoding     = function(const iEncoding : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o retorna a localidade default do arquivo}
+  {Esta fun√ß√£o retorna a localidade default do arquivo}
   TspssSetLocale             = function(const iCategory : integer; const pszLocale : PAnsiChar) : PAnsiChar; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o ?usada para escrita de multiresposta no arquivo}
+  {Esta fun√ß√£o ?usada para escrita de multiresposta no arquivo}
   TspssSetMultRespDefs       = function(const handle : integer; const mrespDefs : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Nao entendi direito - mas seta o diretorio tempor·rio}
+  {Nao entendi direito - mas seta o diretorio tempor√°rio}
   TspssSetTempDir            = function(const dirName : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o seta o texto no textinfo do arquivo}
+  {Esta fun√ß√£o seta o texto no textinfo do arquivo}
   TspssSetTextInfo           = function(const handle : integer; const textInfo : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o seta o valor em campo string do case corrente}
+  {Esta fun√ß√£o seta o valor em campo string do case corrente}
   TspssSetValueChar          = function(const handle : integer; varHandle : double; const value : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o seta o valor em campo numeric do case corrente}
+  {Esta fun√ß√£o seta o valor em campo numeric do case corrente}
   TspssSetValueNumeric       = function(const handle : integer; varHandle : double; value : double) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o seta o valor de alinhamento do atributo da vari·vel}
+  {Esta fun√ß√£o seta o valor de alinhamento do atributo da vari√°vel}
   TspssSetVarAlignment       = function(const handle : integer; const varName : PAnsiChar; alignment : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o reescreve os atributos de uma vari·vel}
+  {Esta fun√ß√£o reescreve os atributos de uma vari√°vel}
   TspssSetVarAttributes      = function(const handle : integer; const varName : PAnsiChar; const attribNames : TValuec; const attribText : TValuec; const nAttributes : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o seta o falta de valor de uma vari·vel string}
+  {Esta fun√ß√£o seta o falta de valor de uma vari√°vel string}
   TspssSetVarCMissingValues  = function(const handle : integer; const varName : PAnsiChar; missingFormat : integer; const missingVal1 : PAnsiChar; const missingVal2 : PAnsiChar; const missingVal3 : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta seta o tamanho(width) de uma coluna de uma vari·vel}
+  {Esta seta o tamanho(width) de uma coluna de uma vari√°vel}
   TspssSetVarColumnWidth     = function(const handle : integer; const varName : PAnsiChar; columnWidth : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o altera ou adiciona a um label de uma vari·vel string}
+  {Esta fun√ß√£o altera ou adiciona a um label de uma vari√°vel string}
   TspssSetVarCValueLabel     = function(const handle : integer; const varName : PAnsiChar; const value : PAnsiChar; const plabel : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o altera ou adiciona um ou mais labels de uma ou mais vari·veis string}
+  {Esta fun√ß√£o altera ou adiciona um ou mais labels de uma ou mais vari√°veis string}
   TspssSetVarCValueLabels    = function(const handle : integer; const varNames : TValuec; numVars : integer; const values : TValuec; const labels : TValuec; numLabels : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o seta o label de uma vari·vel}
+  {Esta fun√ß√£o seta o label de uma vari√°vel}
   TspssSetVarLabel           = function(const handle : integer; const varName : PAnsiChar; const varLabel : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o seta o valor medio de uma level do atributo da vari·vel}
+  {Esta fun√ß√£o seta o valor medio de uma level do atributo da vari√°vel}
   TspssSetVarMeasureLevel    = function(const handle : integer; const varName : PAnsiChar; measureLevel : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o seta a falta de valor de uma vari·vel numeric}
+  {Esta fun√ß√£o seta a falta de valor de uma vari√°vel numeric}
   TspssSetVarNMissingValues  = function(const handle : integer; const varName : PAnsiChar; missingFormat : integer; missingVal1 : double; missingVal2 : double; missingVal3 : double) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o altera ou adiciona a um label de uma vari·vel numeric}
+  {Esta fun√ß√£o altera ou adiciona a um label de uma vari√°vel numeric}
   TspssSetVarNValueLabel     = function(const handle : integer; const varName : PAnsiChar; value : double; const plabel : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o altera ou adiciona um ou mais labels de uma ou mais vari·veis numeric}
+  {Esta fun√ß√£o altera ou adiciona um ou mais labels de uma ou mais vari√°veis numeric}
   TspssSetVarNValueLabels    = function(const handle : integer; const varNames : TValuec; numVars : integer; const values : double; const labels : TValuec; numLabels : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o cria uma nova vari·vel string ou numeric no arquivo}
+  {Esta fun√ß√£o cria uma nova vari√°vel string ou numeric no arquivo}
   TspssSetVarName            = function( const handle : integer; const varName : PAnsiChar;  const varLength : integer) : integer;{$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o seta as formataÁ„o de impress„o da vari·vel}
+  {Esta fun√ß√£o seta as formata√ß√£o de impress√£o da vari√°vel}
   TspssSetVarPrintFormat     = function(const handle : integer; const varName : PAnsiChar; printType : integer; printDec : integer; printWid : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o seta as formataÁ„o de escrita da vari·vel}
+  {Esta fun√ß√£o seta as formata√ß√£o de escrita da vari√°vel}
   TspssSetVarWriteFormat     = function(const handle : integer; const varName : PAnsiChar; writeType : integer; writeDec : integer; writeWid : integer) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o define a vari·vel apresenta informaÁıes no arquivo de dados.}
+  {Esta fun√ß√£o define a vari√°vel apresenta informa√ß√µes no arquivo de dados.}
   TspssSetVariableSets       = function(const handle : integer; const varSets : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o l?o case do arquivo dentro do ponteiro}
+  {Esta fun√ß√£o l?o case do arquivo dentro do ponteiro}
   TspssWholeCaseIn           = function(const handle : integer; var caseRec : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
-  {Esta funÁ„o escreve o case no arquivo}
+  {Esta fun√ß√£o escreve o case no arquivo}
   TspssWholeCaseOut          = function(const handle : integer; const caseRec : PAnsiChar) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
 
-  {N„o entendi}
+  {N√£o entendi}
   TspssSeekNextCase          = function(const handle : integer; const caseNumber : Longint) : integer; {$IFDEF WIN32} stdcall; {$ENDIF}
 
 
@@ -1449,7 +1449,7 @@ end;
 
 initialization
   if not LoadLib() then begin
-    ShowMessage('N„o foi possivel carregar SPSSIO32.DLL');
+    ShowMessage('N√£o foi possivel carregar SPSSIO32.DLL');
     halt(0);
   end;
   if not SetProcAddress() then

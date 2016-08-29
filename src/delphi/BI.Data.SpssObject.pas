@@ -1,4 +1,4 @@
-unit Spss.SpssObject;
+unit BI.Data.SpssObject;
 
 interface
 
@@ -689,7 +689,7 @@ begin
       if EnumCount >0 then
       begin
         v.VarType :=sEnum;
-      //重新赋值类型
+      //脰脴脨脗赂鲁脰碌脌脿脨脥
         for J := 0 to EnumCount-1 do
         begin
           ItemLabel :=PItemLabels^[J];
